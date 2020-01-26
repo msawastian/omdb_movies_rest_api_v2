@@ -5,4 +5,6 @@ default:
     username: "user"
     password: "password"
     database: "omdb-movie-api-dev"
-    synchronize: true
+    synchronize: true,
+    entities:
+      - "src/entities/*.entity.ts"
