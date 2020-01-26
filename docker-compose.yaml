@@ -1,0 +1,20 @@
+version: '3.7'
+
+services:
+  omdb-movie-api-db:
+    image: mysql
+    container_name: "movies-db-api"
+    restart: always
+    environment:
+      MYSQL_DATABASE: omdb-movie-api-dev
+      MYSQL_USER: 'user'
+      MYSQL_PASSWORD: 'password'
+      MYSQL_ROOT_PASSWORD: 'rootpassword'
+    ports:
+      - '3306:3306'
+    expose:
+      - '3306'
+    volumes: 
+      - mysql-db:/var/lib/mysql
+volumes: 
+    mysql-db:
