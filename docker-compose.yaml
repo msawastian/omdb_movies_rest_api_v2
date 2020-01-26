@@ -1,6 +1,10 @@
 version: '3.7'
 
 services:
+  omdb-movie-api:
+    build: .
+    ports: 
+      - "5000:5000"
   omdb-movie-api-db:
     image: mysql
     container_name: "movies-db-api"
