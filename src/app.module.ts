@@ -1,8 +1,9 @@
-import { Module } from '@nestjs/common';
+import { Module, MiddlewareConsumer } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ConfigModule } from './config/config.module';
+import { RateLimiterMiddleware } from './middleware/rate_limiter.middleware';
 
 @Module({
   imports: [
@@ -20,4 +21,10 @@ import { ConfigModule } from './config/config.module';
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule {}
+export class AppModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer
+      .apply(RateLimiterMiddleware)
+      // .forRoutes({ path: '', method: RequestMethod.GET });
+  }
+}
