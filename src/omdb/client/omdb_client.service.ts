@@ -7,7 +7,7 @@ import { AxiosResponse } from 'axios';
 import { OmdbApiResponseDTO } from 'src/dtos/omdb_api_response.dto';
 import { plainToClass } from 'class-transformer';
 import { validate } from 'class-validator';
-import { TransformerService } from '../responder/transformer.service';
+import { TransformerService } from '../utilities/transformer.service';
 import { MovieDTO } from 'src/dtos/movie/movie.dto';
 import { Movie } from 'src/entities/movie.entity';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -19,7 +19,7 @@ export class OmdbClientService {
         private readonly http: HttpService,
         private readonly transformerService: TransformerService,
         @InjectRepository(Movie)
-        private readonly movieRepo: Repository<Movie>
+        private readonly movieRepo: Repository<Movie>,
     ) { }
 
     private getByMovieTitle(title: string): Observable<any> {
@@ -50,34 +50,38 @@ export class OmdbClientService {
     }
 
     async addMovieToDB(dto: AddMovieDTO): Promise<void> {
-
+        try {
+            const { data } = await this.getMovieDetails(dto);
+            const omdbResponse: OmdbApiResponseDTO = plainToClass(OmdbApiResponseDTO, data);
         
-        const { data } = await this.getMovieDetails(dto);
-        const omdbResponse: OmdbApiResponseDTO = plainToClass(OmdbApiResponseDTO, data);
-        const errors = await validate(omdbResponse);
-
-        if (errors.length > 0) {
-            if (omdbResponse.Error) {
+            const errors = await validate(omdbResponse);
+    
+            if (errors.length > 0) {
+                if (omdbResponse.Error) {
+                    return Promise.reject(new AppError(
+                        CommonErrors.OMDB_API_ERROR,
+                        HttpStatus.INTERNAL_SERVER_ERROR,
+                        omdbResponse.Error,
+                        true
+                    ))
+                }
+    
                 return Promise.reject(new AppError(
-                    CommonErrors.OMDB_API_ERROR,
+                    CommonErrors.VALIDATION_ERROR,
                     HttpStatus.INTERNAL_SERVER_ERROR,
-                    omdbResponse.Error,
+                    'OMDB API response failed validation',
                     true
                 ))
             }
-
-            return Promise.reject(new AppError(
-                CommonErrors.VALIDATION_ERROR,
-                HttpStatus.INTERNAL_SERVER_ERROR,
-                'OMDB API response failed validation',
-                true
-            ))
+    
+            const movieDTO: MovieDTO = this.transformerService.transform(omdbResponse);
+            const movie: Movie = plainToClass(Movie, movieDTO);
+    
+            await this.movieRepo.save(movie);
+        } catch (error) {
+            return;
         }
-
-        const movieDTO: MovieDTO = this.transformerService.transform(omdbResponse);
-        const movie: Movie = plainToClass(Movie, movieDTO);
-
-        await this.movieRepo.save(movie);
+        
     }
 }
 
