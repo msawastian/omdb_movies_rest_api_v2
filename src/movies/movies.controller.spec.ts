@@ -4,17 +4,24 @@ import { getRepositoryToken } from "@nestjs/typeorm";
 import { Movie } from "../entities/movie.entity";
 import { MoviesService } from "./movies.service";
 import { MovieDTO } from "../dtos/movie/movie.dto";
+import { OmdbClientService } from "../omdb/client/omdb_client.service";
 
 describe('Movies Controller', () => {
   let moviesController: MoviesController;
   let moviesService;
+  let omdbClientService;
 
   const createMockMoviesService = () => ({
     fetchAll: jest.fn()
   })
 
+  const createMockOmdbClientService = () => ({
+    addMovieToDB: jest.fn()
+  })
+
   beforeEach(async () => {
     moviesService = createMockMoviesService();
+    omdbClientService = createMockOmdbClientService();
 
     const module = await Test.createTestingModule(
       {
@@ -23,13 +30,16 @@ describe('Movies Controller', () => {
             provide: getRepositoryToken(Movie),
             useValue: {}
           },
-          MoviesService
+          MoviesService,
+          OmdbClientService
         ],
         controllers: [MoviesController]
       }
     )
     .overrideProvider(MoviesService)
     .useValue(moviesService)
+    .overrideProvider(OmdbClientService)
+    .useValue(omdbClientService)
     .compile();
 
     moviesController = module.get<MoviesController>(MoviesController);

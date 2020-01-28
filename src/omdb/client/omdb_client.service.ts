@@ -1,17 +1,18 @@
 import { HttpService, Injectable, HttpStatus } from '@nestjs/common';
-import { Observable } from 'rxjs';
-import { AddMovieDTO } from 'src/dtos/movie/add_movie.dto';
-import { AppError } from 'src/error/app.error';
-import { CommonErrors } from 'src/error/common_errors';
-import { AxiosResponse } from 'axios';
-import { OmdbApiResponseDTO } from 'src/dtos/omdb_api_response.dto';
-import { plainToClass } from 'class-transformer';
-import { validate } from 'class-validator';
-import { TransformerService } from '../utilities/transformer.service';
-import { MovieDTO } from 'src/dtos/movie/movie.dto';
-import { Movie } from 'src/entities/movie.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { Observable } from 'rxjs';
+import { AxiosResponse } from 'axios';
+import { plainToClass } from 'class-transformer';
+import { validate } from 'class-validator';
+import { AppError } from '../../error/app.error'
+import { CommonErrors } from '../../error/common_errors';
+import { AddMovieDTO } from '../../dtos/movie/add_movie.dto';
+import { OmdbApiResponseDTO } from '../../dtos/omdb_api_response.dto';
+import { MovieDTO } from '../../dtos/movie/movie.dto';
+import { Movie } from '../../entities/movie.entity';
+import { TransformerService } from '../utilities/transformer.service';
+
 
 @Injectable()
 export class OmdbClientService {
