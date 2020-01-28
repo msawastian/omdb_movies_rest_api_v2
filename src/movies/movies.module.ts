@@ -9,4 +9,4 @@ import { Movie } from "../entities/movie.entity";
   providers: [MoviesService],
   controllers: [MoviesController]
 })
-export class MoviesModule {};
+export class MoviesModule {}
