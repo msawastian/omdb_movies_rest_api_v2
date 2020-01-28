@@ -25,6 +25,8 @@ export class AppModule {
   configure(consumer: MiddlewareConsumer) {
     consumer
       .apply(RateLimiterMiddleware)
-      .forRoutes({ path: 'movies', method: RequestMethod.GET });
+      .forRoutes({
+        path: '*', method: RequestMethod.ALL
+      });
   }
 }

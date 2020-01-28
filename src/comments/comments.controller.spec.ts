@@ -5,13 +5,15 @@ import { CommentsService } from "./comments.service";
 import { CommentDTO } from "../dtos/comment.dto";
 import { Comment } from "../entities/comment.entity";
 import { Movie } from "../entities/movie.entity";
+import { SaveCommentDTO } from "../dtos/save_comment.dto";
 
 describe('Comments Controller', () => {
   let commentsController: CommentsController;
   let commentsService;
 
   const createMockCommentsService = () => ({
-    fetchAll: jest.fn()
+    fetchAll: jest.fn(),
+    save: jest.fn()
   });
 
   beforeEach(async () => {
@@ -33,7 +35,7 @@ describe('Comments Controller', () => {
       .useValue(commentsService)
       .compile();
 
-      commentsController = module.get<CommentsController>(CommentsController);
+    commentsController = module.get<CommentsController>(CommentsController);
   });
 
   describe('Fetch all Comments', () => {
@@ -44,7 +46,7 @@ describe('Comments Controller', () => {
       return comment;
     }
 
-    it ('should return an array of CommentDTOs', async () => {
+    it('should return an array of CommentDTOs', async () => {
       const comment = prepareTestComment();
       jest.spyOn(commentsService, 'fetchAll').mockImplementation(async () => [comment]);
       const results = await commentsController.fetchAll();
@@ -54,7 +56,7 @@ describe('Comments Controller', () => {
         expect(comment).toBeInstanceOf(CommentDTO);
       })
     });
-    
+
     it('should return an array with proper length', async () => {
       const comment = prepareTestComment();
       jest.spyOn(commentsService, 'fetchAll').mockImplementation(async () => [comment]);
@@ -66,6 +68,19 @@ describe('Comments Controller', () => {
     it('should call CommentsService.fetchAll() only once', async () => {
       const spy = jest.spyOn(commentsService, 'fetchAll').mockImplementation(async () => []);
       await commentsController.fetchAll();
+
+      expect(spy).toBeCalledTimes(1);
+    })
+  });
+
+  describe('Save Comment to database', () => {
+
+    it('should call CommentsService.save() only once', async () => {
+      const mockSaveCommentDTO = new SaveCommentDTO({ text: 'Mock Comment' });
+
+      const spy = jest.spyOn(commentsService, 'save').mockImplementation(async () => undefined);
+
+      await commentsController.save(mockSaveCommentDTO);
 
       expect(spy).toBeCalledTimes(1);
     })

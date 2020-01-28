@@ -1,7 +1,8 @@
 import { Entity, PrimaryGeneratedColumn, PrimaryColumn, Column, ManyToMany } from "typeorm";
-import { Expose, Exclude, classToPlain } from "class-transformer";
+import { Expose, Exclude, classToPlain, plainToClass } from "class-transformer";
 import { Movie } from "./movie.entity";
 import { CommentDTO } from "../dtos/comment.dto";
+import { SaveCommentDTO } from "src/dtos/save_comment.dto";
 
 @Entity()
 export class Comment {
@@ -31,5 +32,14 @@ export class Comment {
         const dto = new CommentDTO({ ...classToPlain(this), imdbID: movie.imdbID });
 
         return dto;
+    }
+
+    static deserialize(dto: SaveCommentDTO, movie?: Movie): Comment {
+        const comment = plainToClass(Comment, dto);
+        if (movie != undefined) {
+            comment.movie = Promise.resolve(movie);
+        }
+
+        return comment;
     }
 }
