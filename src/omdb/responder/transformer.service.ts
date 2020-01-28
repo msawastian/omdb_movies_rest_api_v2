@@ -1,6 +1,6 @@
 import { Injectable } from "@nestjs/common";
+import { MovieDTO } from "src/dtos/movie/movie.dto";
 import { OmdbApiResponseDTO } from "src/dtos/omdb_api_response.dto";
-import { MovieDTO } from "src/dtos/movie.dto";
 
 @Injectable()
 export class TransformerService {

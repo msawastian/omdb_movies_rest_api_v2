@@ -3,7 +3,7 @@ import { Test } from "@nestjs/testing";
 import { getRepositoryToken } from "@nestjs/typeorm";
 import { Movie } from "../entities/movie.entity";
 import { MoviesService } from "./movies.service";
-import { MovieDTO } from "../dtos/movie.dto";
+import { MovieDTO } from "../dtos/movie/movie.dto";
 
 describe('Movies Controller', () => {
   let moviesController: MoviesController;
