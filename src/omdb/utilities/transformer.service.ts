@@ -4,8 +4,9 @@ import { OmdbApiResponseDTO } from "../../dtos/omdb_api_response.dto";
 
 @Injectable()
 export class TransformerService {
+  private readonly nullString: string = 'N/A'
 
-  constructor(private readonly nullString: string) {}
+  constructor() {}
 
   private parseNull(str: string): string | null {
     return str === this.nullString ? null : str;

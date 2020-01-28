@@ -10,7 +10,7 @@ export class ConfigService {
     private readonly config: IConfig;
 
     constructor() {
-        this.config = dotenv.parse(fs.readFileSync(`${process.env.NODE_ENV}.env`));
+        this.config = dotenv.parse(fs.readFileSync(`./env/${process.env.NODE_ENV}.env`));
     }
 
     public getConfig(key: string): string {
