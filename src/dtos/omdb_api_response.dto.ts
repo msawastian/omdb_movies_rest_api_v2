@@ -1,5 +1,5 @@
 import { Expose, Exclude } from 'class-transformer';
-import { IsDefined, IsEmpty, IsNumberString, IsString, IsUrl, IsEmail, IsNumber, IsBooleanString } from 'class-validator';
+import { IsDefined, IsEmpty, IsNumberString, IsString, IsEmail, IsBooleanString } from 'class-validator';
 
 
 export class OmdbApiResponseDTO {
