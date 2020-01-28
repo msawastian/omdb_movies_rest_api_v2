@@ -2,10 +2,10 @@ import { CommentsController } from "./comments.controller";
 import { Test } from "@nestjs/testing";
 import { getRepositoryToken } from "@nestjs/typeorm";
 import { CommentsService } from "./comments.service";
-import { CommentDTO } from "../dtos/comment.dto";
+import { CommentDTO } from "../dtos/comment/comment.dto";
 import { Comment } from "../entities/comment.entity";
 import { Movie } from "../entities/movie.entity";
-import { SaveCommentDTO } from "../dtos/save_comment.dto";
+import { SaveCommentDTO } from "../dtos/comment/save_comment.dto";
 
 describe('Comments Controller', () => {
   let commentsController: CommentsController;

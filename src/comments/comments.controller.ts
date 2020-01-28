@@ -1,7 +1,7 @@
 import { Controller, Get, Post, UsePipes, ValidationPipe, Body } from "@nestjs/common";
 import { CommentsService } from "./comments.service";
-import { CommentDTO } from "../dtos/comment.dto";
-import { SaveCommentDTO } from "../dtos/save_comment.dto";
+import { CommentDTO } from "../dtos/comment/comment.dto";
+import { SaveCommentDTO } from "../dtos/comment/save_comment.dto";
 
 @Controller('comments')
 export class CommentsController {

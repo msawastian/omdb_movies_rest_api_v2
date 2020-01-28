@@ -1,8 +1,8 @@
-import { Entity, PrimaryGeneratedColumn, PrimaryColumn, Column, ManyToMany } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, ManyToMany } from "typeorm";
 import { Expose, Exclude, classToPlain, plainToClass } from "class-transformer";
 import { Movie } from "./movie.entity";
-import { CommentDTO } from "../dtos/comment.dto";
-import { SaveCommentDTO } from "src/dtos/save_comment.dto";
+import { CommentDTO } from "../dtos/comment/comment.dto";
+import { SaveCommentDTO } from "../dtos/comment/save_comment.dto";
 
 @Entity()
 export class Comment {
