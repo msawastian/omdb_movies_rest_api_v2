@@ -1,4 +1,4 @@
-import { Injectable } from "@nestjs/common";
+import { Injectable, Logger } from "@nestjs/common";
 import * as dotenv from 'dotenv';
 import * as fs from 'fs';
 import { IConfig } from './interfaces/IConfig';
@@ -6,6 +6,8 @@ import { IConfig } from './interfaces/IConfig';
 
 @Injectable()
 export class ConfigService {
+    private readonly logger: Logger = new Logger(ConfigService.name);
+
 
     private readonly config: IConfig;
 

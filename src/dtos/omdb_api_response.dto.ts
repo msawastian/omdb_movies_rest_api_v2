@@ -1,5 +1,5 @@
 import { Expose, Exclude } from 'class-transformer';
-import { IsDefined, IsEmpty, IsNumberString, IsString, IsEmail, IsBooleanString } from 'class-validator';
+import { IsDefined, IsEmpty, IsNumberString, IsString, IsEmail, IsBooleanString, IsUrl } from 'class-validator';
 
 
 export class OmdbApiResponseDTO {
@@ -70,7 +70,7 @@ export class OmdbApiResponseDTO {
   Awards: string;
 
   @IsDefined()
-  @IsEmail()
+  @IsUrl()
   @Expose()
   Poster: string;
 
@@ -92,7 +92,7 @@ export class OmdbApiResponseDTO {
   @IsDefined()
   @IsString()
   @Expose()
-  imdbId: string;
+  imdbID: string;
 
   @IsDefined()
   @IsString()
@@ -118,11 +118,6 @@ export class OmdbApiResponseDTO {
   @IsString()
   @Expose()
   Website: string;
-
-  @IsDefined()
-  @IsBooleanString()
-  @Exclude()
-  Response: string;
 
   @IsEmpty()
   @Exclude()

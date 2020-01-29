@@ -18,7 +18,7 @@ export class TransformerService {
   }
 
   private parseFloat(str: string): number | null {
-    const parsedFloat = this.parseFloat(str);
+    const parsedFloat = parseFloat(str);
     return Number.isFinite(parsedFloat) ? parsedFloat : null;
   }
 
@@ -29,7 +29,7 @@ export class TransformerService {
   transform(omdbRes: OmdbApiResponseDTO): MovieDTO {
     return new MovieDTO(
       {
-        imdbID: omdbRes.imdbId,
+        imdbID: omdbRes.imdbID,
         title: omdbRes.Title,
         year: this.parseNull(omdbRes.Year),
         rated: this.parseNull(omdbRes.Rated),

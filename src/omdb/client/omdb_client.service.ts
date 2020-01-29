@@ -1,4 +1,4 @@
-import { HttpService, Injectable, HttpStatus } from '@nestjs/common';
+import { HttpService, Injectable, HttpStatus, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Observable } from 'rxjs';
@@ -12,23 +12,30 @@ import { OmdbApiResponseDTO } from '../../dtos/omdb_api_response.dto';
 import { MovieDTO } from '../../dtos/movie/movie.dto';
 import { Movie } from '../../entities/movie.entity';
 import { TransformerService } from '../utilities/transformer.service';
+import { ConfigService } from 'src/config/config.service';
 
 
 @Injectable()
 export class OmdbClientService {
+    private readonly logger: Logger = new Logger(OmdbClientService.name);
+
     constructor(
         private readonly http: HttpService,
         private readonly transformerService: TransformerService,
+        private readonly configService: ConfigService,
         @InjectRepository(Movie)
         private readonly movieRepo: Repository<Movie>,
     ) { }
 
     private getByMovieTitle(title: string): Observable<any> {
-        return this.http.get('/', { params: { t: title } });
+        this.logger.debug(this.http.axiosRef.defaults);
+
+        return this.http.get('/', { params: { t: title, apikey: this.configService.getConfig('OMDB_API_KEY') } });
+
     }
 
     private getByImdbID(imdbID: string): Observable<any> {
-        return this.http.get('/', { params: { i: imdbID } });
+        return this.http.get('/', { params: { i: imdbID, apikey: this.configService.getConfig('OMDB_API_KEY') } });
     }
 
     private getMovieDetails(dto: AddMovieDTO): Promise<AxiosResponse<any>> {
@@ -54,7 +61,6 @@ export class OmdbClientService {
         try {
             const { data } = await this.getMovieDetails(dto);
             const omdbResponse: OmdbApiResponseDTO = plainToClass(OmdbApiResponseDTO, data);
-        
             const errors = await validate(omdbResponse);
     
             if (errors.length > 0) {
@@ -66,21 +72,19 @@ export class OmdbClientService {
                         true
                     ))
                 }
-    
                 return Promise.reject(new AppError(
                     CommonErrors.VALIDATION_ERROR,
                     HttpStatus.INTERNAL_SERVER_ERROR,
-                    'OMDB API response failed validation',
+                    errors.toString(),
                     true
                 ))
             }
-    
+            
             const movieDTO: MovieDTO = this.transformerService.transform(omdbResponse);
             const movie: Movie = plainToClass(Movie, movieDTO);
-    
             await this.movieRepo.save(movie);
         } catch (error) {
-            return;
+            this.logger.error(error.toString());
         }
         
     }

@@ -9,7 +9,7 @@ export class MoviesController {
 
   constructor(
     private readonly movieService: MoviesService,
-    private readonly omdbClientService: OmdbClientService
+    private readonly omdbClientService: OmdbClientService,
   ) {}
 
   @Get()
