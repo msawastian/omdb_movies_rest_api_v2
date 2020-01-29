@@ -6,12 +6,9 @@ import { OmdbClientService } from './omdb_client.service';
 import { UtilitiesModule } from '../utilities/utilities.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Movie } from '~entities/movie.entity';
-import { LoggerModule } from 'nestjs-pino';
-
 
 @Module({
   imports: [
-    LoggerModule.forRoot(),
     TypeOrmModule.forFeature([Movie]),
     ConfigModule,
     UtilitiesModule,

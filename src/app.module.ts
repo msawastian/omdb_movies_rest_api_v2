@@ -10,14 +10,12 @@ import { MoviesModule } from '~movies/movies.module';
 import { CommentsModule } from '~comments/comments.module';
 import { Movie } from '~entities/movie.entity';
 import { Comment } from '~entities/comment.entity';
-import { LoggerModule } from 'nestjs-pino';
 
 @Module({
   imports: [
     TypeOrmModule.forRoot({
       type: 'mysql',
-      // host: 'movies-db-api',
-      host: 'localhost',
+      host: 'movies-db-api',
       port: 3306,
       username: 'user',
       password: 'password',
@@ -28,9 +26,7 @@ import { LoggerModule } from 'nestjs-pino';
     ConfigModule,
     OmdbClientModule,
     MoviesModule,
-    CommentsModule,
-    LoggerModule
-  ],
+    CommentsModule],
   controllers: [MoviesController, CommentsController],
   providers: [AppService],
 })

@@ -1,6 +1,13 @@
 FROM node:12-alpine
+
 WORKDIR /usr/src/app
-COPY package.json .
-RUN npm install
+
+ARG DOCKER_ENV
+
+ENV NODE_ENV=${DOCKER_ENV}
+
 COPY . .
+
+RUN npm install --silent
+
 CMD ["npm", "start"]
