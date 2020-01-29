@@ -1,4 +1,4 @@
-import { IsString, IsNotEmpty, MaxLength, IsNumberString, Min, Max, IsNumber } from "class-validator";
+import { IsString, IsNotEmpty, MaxLength, Min, Max, IsNumber } from "class-validator";
 
 export class SaveCommentDTO {
 

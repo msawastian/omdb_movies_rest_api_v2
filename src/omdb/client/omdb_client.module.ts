@@ -1,14 +1,12 @@
 import { HttpModule, Module } from '@nestjs/common';
-import * as http from 'http';
 
 import { ConfigModule } from '../../config/config.module';
 import { ConfigService } from '../../config/config.service';
 import { OmdbClientService } from './omdb_client.service';
 import { UtilitiesModule } from '../utilities/utilities.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Movie } from '../../entities/movie.entity';
+import { Movie } from '~entities/movie.entity';
 import { LoggerModule } from 'nestjs-pino';
-import { URLSearchParams } from 'url';
 
 
 @Module({

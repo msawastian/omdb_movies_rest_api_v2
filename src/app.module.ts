@@ -1,15 +1,15 @@
 import { Module, MiddlewareConsumer, RequestMethod } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppService } from './app.service';
-import { ConfigModule } from './config/config.module';
-import { RateLimiterMiddleware } from './middleware/rate_limiter.middleware';
-import { MoviesController } from './movies/movies.controller';
-import { CommentsController } from './comments/comments.controller';
-import { OmdbClientModule } from './omdb/client/omdb_client.module';
-import { MoviesModule } from './movies/movies.module';
-import { CommentsModule } from './comments/comments.module';
-import { Movie } from './entities/movie.entity';
-import { Comment } from './entities/comment.entity';
+import { ConfigModule } from '~config/config.module';
+import { RateLimiterMiddleware } from '~middleware/rate_limiter.middleware';
+import { MoviesController } from '~movies/movies.controller';
+import { CommentsController } from '~comments/comments.controller';
+import { OmdbClientModule } from '~omdb/client/omdb_client.module';
+import { MoviesModule } from '~movies/movies.module';
+import { CommentsModule } from '~comments/comments.module';
+import { Movie } from '~entities/movie.entity';
+import { Comment } from '~entities/comment.entity';
 import { LoggerModule } from 'nestjs-pino';
 
 @Module({

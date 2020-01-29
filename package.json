@@ -64,6 +64,16 @@
       "ts"
     ],
     "rootDir": "src",
+    "moduleNameMapper": {
+      "^~comments/(.*)$": "<rootDir>/comments/$1",
+      "^~dtos/(.*)$": "<rootDir>/dtos/$1",
+      "^~config/(.*)$": "<rootDir>/config/$1",
+      "^~entities/(.*)$": "<rootDir>/entities/$1",
+      "^~error/(.*)$": "<rootDir>/error/$1",
+      "^~middleware/(.*)$": "<rootDir>/middleware/$1",
+      "^~movies/(.*)$": "<rootDir>/movies/$1",
+      "^~omdb/(.*)$": "<rootDir>/omdb/$1"
+    },
     "testRegex": ".spec.ts$",
     "transform": {
       "^.+\\.(t|j)s$": "ts-jest"

@@ -1,11 +1,12 @@
-import { MoviesController } from "./movies.controller";
 import { Test } from "@nestjs/testing";
 import { getRepositoryToken } from "@nestjs/typeorm";
-import { Movie } from "../entities/movie.entity";
+import { MoviesController } from "./movies.controller";
+import { Movie } from "~entities/movie.entity";
+import { MovieDTO } from "~dtos/movie/movie.dto";
+import { AddMovieDTO } from "~dtos/movie/add_movie.dto";
+import { OmdbClientService } from "~omdb/client/omdb_client.service";
 import { MoviesService } from "./movies.service";
-import { MovieDTO } from "../dtos/movie/movie.dto";
-import { AddMovieDTO } from "../dtos/movie/add_movie.dto";
-import { OmdbClientService } from "../omdb/client/omdb_client.service";
+
 
 describe('Movies Controller', () => {
   let moviesController: MoviesController;

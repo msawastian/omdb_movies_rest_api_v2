@@ -1,8 +1,8 @@
 import { Controller, Get, Post, HttpCode, HttpStatus, UsePipes, ValidationPipe, Body } from "@nestjs/common";
 import { MoviesService } from "./movies.service";
-import { MovieDTO } from "../dtos/movie/movie.dto";
-import { AddMovieDTO } from "../dtos/movie/add_movie.dto";
-import { OmdbClientService } from "../omdb/client/omdb_client.service";
+import { MovieDTO } from "~dtos/movie/movie.dto";
+import { AddMovieDTO } from "~dtos/movie/add_movie.dto";
+import { OmdbClientService } from "~omdb/client/omdb_client.service";
 
 @Controller('movies')
 export class MoviesController {

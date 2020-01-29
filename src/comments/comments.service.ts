@@ -1,11 +1,11 @@
 import { Injectable, HttpStatus } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
-import { Comment } from "../entities/comment.entity";
-import { SaveCommentDTO } from "../dtos/comment/save_comment.dto";
-import { Movie } from "../entities/movie.entity";
-import { AppError } from "../error/app.error";
-import { CommonErrors } from "../error/common_errors";
+import { Comment } from "~entities/comment.entity";
+import { Movie } from "~entities/movie.entity";
+import { SaveCommentDTO } from "~dtos/comment/save_comment.dto";
+import { AppError } from "~error/app.error";
+import { CommonErrors } from "~error/common_errors";
 
 @Injectable()
 export class CommentsService {

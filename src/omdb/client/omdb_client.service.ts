@@ -5,14 +5,14 @@ import { Observable } from 'rxjs';
 import { AxiosResponse } from 'axios';
 import { plainToClass } from 'class-transformer';
 import { validate } from 'class-validator';
-import { AppError } from '../../error/app.error'
-import { CommonErrors } from '../../error/common_errors';
-import { AddMovieDTO } from '../../dtos/movie/add_movie.dto';
-import { OmdbApiResponseDTO } from '../../dtos/omdb_api_response.dto';
-import { MovieDTO } from '../../dtos/movie/movie.dto';
-import { Movie } from '../../entities/movie.entity';
+import { AppError } from '~error/app.error'
+import { CommonErrors } from '~error/common_errors';
+import { AddMovieDTO } from '~dtos/movie/add_movie.dto';
+import { OmdbApiResponseDTO } from '~dtos/omdb_api_response.dto';
+import { MovieDTO } from '~dtos/movie/movie.dto';
+import { Movie } from '~entities/movie.entity';
 import { TransformerService } from '../utilities/transformer.service';
-import { ConfigService } from 'src/config/config.service';
+import { ConfigService } from '~config/config.service';
 
 
 @Injectable()
