@@ -9,7 +9,6 @@ import { CommonErrors } from "../error/common_errors";
 
 @Injectable()
 export class CommentsService {
-
   constructor(
     @InjectRepository(Comment)
     private readonly commentsRepo: Repository<Comment>,

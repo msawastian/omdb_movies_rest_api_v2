@@ -1,4 +1,4 @@
-import { IsString, IsNotEmpty, MaxLength } from "class-validator";
+import { IsString, IsNotEmpty, MaxLength, IsNumberString, Min, Max, IsNumber } from "class-validator";
 
 export class SaveCommentDTO {
 
@@ -15,6 +15,12 @@ export class SaveCommentDTO {
   @IsNotEmpty()
   @MaxLength(512)
   text: string
+
+  @IsNumber()
+  @IsNotEmpty()
+  @Min(1)
+  @Max(10)
+  rating: number
 
   constructor(init?: Partial<SaveCommentDTO>) {
     Object.assign(this, init);

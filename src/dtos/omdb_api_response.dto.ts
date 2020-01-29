@@ -70,17 +70,17 @@ export class OmdbApiResponseDTO {
   Awards: string;
 
   @IsDefined()
-  @IsUrl()
+  @IsString()
   @Expose()
   Poster: string;
 
   @IsDefined()
-  @IsNumberString()
+  @IsString()
   @Expose()
   Metascore: string;
 
   @IsDefined()
-  @IsNumberString()
+  @IsString()
   @Expose()
   imdbRating: string;
 

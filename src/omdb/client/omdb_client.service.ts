@@ -28,8 +28,6 @@ export class OmdbClientService {
     ) { }
 
     private getByMovieTitle(title: string): Observable<any> {
-        this.logger.debug(this.http.axiosRef.defaults);
-
         return this.http.get('/', { params: { t: title, apikey: this.configService.getConfig('OMDB_API_KEY') } });
 
     }
@@ -61,6 +59,7 @@ export class OmdbClientService {
         try {
             const { data } = await this.getMovieDetails(dto);
             const omdbResponse: OmdbApiResponseDTO = plainToClass(OmdbApiResponseDTO, data);
+
             const errors = await validate(omdbResponse);
     
             if (errors.length > 0) {
@@ -79,7 +78,8 @@ export class OmdbClientService {
                     true
                 ))
             }
-            
+
+
             const movieDTO: MovieDTO = this.transformerService.transform(omdbResponse);
             const movie: Movie = plainToClass(Movie, movieDTO);
             await this.movieRepo.save(movie);

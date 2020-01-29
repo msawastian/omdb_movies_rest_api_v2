@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToMany } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, ManyToMany, ManyToOne } from "typeorm";
 import { Expose, Exclude, classToPlain, plainToClass } from "class-transformer";
 import { Movie } from "./movie.entity";
 import { CommentDTO } from "../dtos/comment/comment.dto";
@@ -24,7 +24,7 @@ export class Comment {
     rating: number;
 
     @Exclude()
-    @ManyToMany(_ => Movie, movie => movie.comments, { lazy: true })
+    @ManyToOne(_ => Movie, movie => movie.comments, { eager: true })
     movie: Promise<Movie>;
 
     async serialize(): Promise<CommentDTO> {
