@@ -13,7 +13,7 @@ export class SaveCommentDTO {
 
   @IsString()
   @IsNotEmpty()
-  @MaxLength(512)
+  @MaxLength(256)
   text: string
 
   @IsNumber()

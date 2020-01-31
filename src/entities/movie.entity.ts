@@ -104,4 +104,8 @@ export class Movie {
     static deserialize(dto: MovieDTO): Movie {
         return plainToClass(Movie, dto);
     }
+
+    constructor(init?: Partial<Movie>) {
+        Object.assign(this, init);
+    }
 }

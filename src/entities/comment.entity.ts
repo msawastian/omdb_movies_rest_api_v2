@@ -3,6 +3,7 @@ import { Expose, Exclude, classToPlain, plainToClass } from "class-transformer";
 import { Movie } from "./movie.entity";
 import { CommentDTO } from "~dtos/comment/comment.dto";
 import { SaveCommentDTO } from "~dtos/comment/save_comment.dto";
+import { Min, Max } from "class-validator";
 
 @Entity()
 export class Comment {
@@ -21,11 +22,17 @@ export class Comment {
 
     @Expose()
     @Column({ type: 'integer' })
+    @Min(0)
+    @Max(10)
     rating: number;
 
     @Exclude()
     @ManyToOne(_ => Movie, movie => movie.comments, { eager: true })
     movie: Promise<Movie>;
+
+    constructor(init?: Partial<Comment>) {
+        Object.assign(this, init);
+      }
 
     async serialize(): Promise<CommentDTO> {
         const movie = await this.movie;

@@ -37,10 +37,10 @@ export class OmdbClientService {
     }
 
     private getMovieDetails(dto: AddMovieDTO): Promise<AxiosResponse<any>> {
-        const { imdbId, title } = dto;
+        const { imdbID, title } = dto;
 
-        if (imdbId !== undefined) {
-            return this.getByImdbID(imdbId).toPromise();
+        if (imdbID !== undefined) {
+            return this.getByImdbID(imdbID).toPromise();
         }
 
         if (title !== undefined) {

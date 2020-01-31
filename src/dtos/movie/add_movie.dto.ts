@@ -1,16 +1,18 @@
-import { ValidateIf, IsNotEmpty } from "class-validator";
+import { ValidateIf, IsNotEmpty, IsString } from "class-validator";
 
 export class AddMovieDTO {
 
   @ValidateIf(o => o.title === undefined)
   @IsNotEmpty()
-  imdbId?: string;
+  @IsString()
+  imdbID?: string;
 
-  @ValidateIf(o => o.imdbId === undefined)
+  @ValidateIf(o => o.imdbID === undefined)
   @IsNotEmpty()
+  @IsString()
   title?: string;
 
-  constructor(partial?: Partial<AddMovieDTO>) {
-    Object.assign(this, partial);
+  constructor(init?: Partial<AddMovieDTO>) {
+    Object.assign(this, init);
   }
 }
