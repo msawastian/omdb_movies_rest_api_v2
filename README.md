@@ -11,11 +11,9 @@ REST API made with [NestJS](https://nestjs.com/) and supplied by [OMDB](https://
 $ npm install
 ```
 
-Add your OMDB_API_KEY in the .env filed stored at ./env.
-
 ```bash
 #build docker container and pass the DOCKER_ENV(NODE_ENV) variable
-$ docker-compose build --build-arg DOCKER_ENV=(development || production || test)
+$ docker-compose build --build-arg DOCKER_ENV=(development || production || test) --build-arg OMDB_KEY=testkey
 ```
 
 You may need root privileges to run the command above.
@@ -86,4 +84,4 @@ Request body is validated as follows:
 
  ## Live version
 
- Live version of the app is available at [Heroku]().
+ Live version of the app is available at [my K8S cluster](http://35.228.200.103:5000/).

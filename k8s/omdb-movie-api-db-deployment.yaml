@@ -1,0 +1,48 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert
+    kompose.version: 1.19.0 (f63a961c)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: omdb-movie-api-db
+  name: omdb-movie-api-db
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose convert
+        kompose.version: 1.19.0 (f63a961c)
+      creationTimestamp: null
+      labels:
+        io.kompose.service: omdb-movie-api-db
+    spec:
+      containers:
+      - env:
+        - name: MYSQL_DATABASE
+          value: omdb-movie-api-dev
+        - name: MYSQL_PASSWORD
+          value: password
+        - name: MYSQL_ROOT_PASSWORD
+          value: rootpassword
+        - name: MYSQL_USER
+          value: user
+        image: mysql:5.7
+        name: movies-db-api
+        ports:
+        - containerPort: 3306
+        resources: {}
+        volumeMounts:
+        - mountPath: /var/lib/mysql
+          name: mysql-db
+          subPath: omdb
+      restartPolicy: Always
+      volumes:
+      - name: mysql-db
+        persistentVolumeClaim:
+          claimName: mysql-db
+status: {}

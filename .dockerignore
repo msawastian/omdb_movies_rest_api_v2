@@ -1,5 +1,5 @@
 .git
-env
+# env
 dist
 *Dockerfile*
 *docker-compose*

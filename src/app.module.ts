@@ -15,8 +15,8 @@ import { Comment } from '~entities/comment.entity';
   imports: [
     TypeOrmModule.forRoot({
       type: 'mysql',
-      host: 'movies-db-api',
-      port: 3306,
+      host: process.env.OMDB_MOVIE_API_DB_SERVICE_HOST ? process.env.OMDB_MOVIE_API_DB_SERVICE_HOST : 'movies-db-api',
+      port: process.env.OMDB_MOVIE_API_DB_SERVICE_PORT ? parseInt(process.env.OMDB_MOVIE_API_DB_SERVICE_PORT, 10) : 3306,
       username: 'user',
       password: 'password',
       database: 'omdb-movie-api-dev',
