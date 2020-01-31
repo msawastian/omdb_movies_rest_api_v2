@@ -72,6 +72,7 @@ describe('Movies Controller E2E Tests', () => {
           expect(_movie).toHaveProperty('title');
         });
     });
+<<<<<<< HEAD
   });
 
   describe('POST /movies', () => {
@@ -120,3 +121,63 @@ describe('Movies Controller E2E Tests', () => {
     await app.close();
   });
 })
+=======
+
+  });
+
+  it('should return a (500 INTERNAL SERVER ERROR) when MovieService.findAll() rejects a Promise', async () => {
+    jest.spyOn(moviesService, 'fetchAll').mockImplementation(() => Promise.reject());
+
+    return request(app.getHttpServer())
+      .get('/movies')
+      .expect(500);
+  });
+})
+
+describe('POST /movies', () => {
+  it('should accept request (title)', async () => {
+    const body = { title: 'Test movie' };
+    jest.spyOn(omdbClientService, 'addMovieToDB').mockImplementation(async () => null);
+
+    return request(app.getHttpServer())
+      .post('/movies')
+      .send(body)
+      .expect(HttpStatus.ACCEPTED);
+  });
+
+  it('should accept request (imdbID)', async () => {
+    const body = { imdbID: 'ID' };
+    jest.spyOn(omdbClientService, 'addMovieToDB').mockImplementation(async () => undefined);
+
+    return request(app.getHttpServer())
+      .post('/movies')
+      .send(body)
+      .expect(HttpStatus.ACCEPTED);
+  });
+
+  it('should return an error (400) when body is missing both required properties', async () => {
+    const body = {};
+    jest.spyOn(omdbClientService, 'addMovieToDB').mockImplementation(async () => undefined);
+
+    return request(app.getHttpServer())
+      .post('/movies')
+      .send(body)
+      .expect(HttpStatus.BAD_REQUEST);
+  });
+
+  it('should return an error (400) when required property data type is invalid', async () => {
+    const body = { imdbID: 1 };
+    jest.spyOn(omdbClientService, 'addMovieToDB').mockImplementation(async () => undefined);
+
+    return request(app.getHttpServer())
+      .post('/movies')
+      .send(body)
+      .expect(HttpStatus.BAD_REQUEST);
+  });
+});
+
+afterAll(async () => {
+  await app.close();
+});
+})
+>>>>>>> 404de05... Early e2e testing
