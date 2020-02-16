@@ -1,4 +1,4 @@
-import { Controller, Get, Post, UsePipes, ValidationPipe, Body } from "@nestjs/common";
+import { Controller, Get, Post, UsePipes, ValidationPipe, Body, Delete, Param, HttpCode, HttpStatus } from "@nestjs/common";
 import { CommentsService } from "./comments.service";
 import { CommentDTO } from "~dtos/comment/comment.dto";
 import { SaveCommentDTO } from "~dtos/comment/save_comment.dto";
@@ -17,5 +17,11 @@ export class CommentsController {
   @UsePipes(new ValidationPipe())
   async save(@Body() saveCommentDTO: SaveCommentDTO) {
     await this.commentsService.save(saveCommentDTO);
+  }
+
+  @Delete('/:id')
+  @HttpCode(HttpStatus.NO_CONTENT)
+  async remove(@Param('id') id: number) {
+    await this.commentsService.remove(id);
   }
 }

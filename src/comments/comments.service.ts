@@ -43,4 +43,7 @@ export class CommentsService {
     return this.commentsRepo.save(comment);
   }
 
+  async remove(id: number) {
+    return this.commentsRepo.delete(id)
+  }
 }

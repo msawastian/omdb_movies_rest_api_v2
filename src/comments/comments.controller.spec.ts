@@ -13,7 +13,8 @@ describe('Comments Controller', () => {
 
   const createMockCommentsService = () => ({
     fetchAll: jest.fn(),
-    save: jest.fn()
+    save: jest.fn(),
+    remove: jest.fn()
   });
 
   beforeEach(async () => {
@@ -73,7 +74,7 @@ describe('Comments Controller', () => {
     })
   });
 
-  describe('Save Comment to database', () => {
+  describe('Save a Comment to the database', () => {
 
     it('should call CommentsService.save() only once', async () => {
       const mockSaveCommentDTO = new SaveCommentDTO({ text: 'Mock Comment' });
@@ -81,6 +82,16 @@ describe('Comments Controller', () => {
       const spy = jest.spyOn(commentsService, 'save').mockImplementation(async () => undefined);
 
       await commentsController.save(mockSaveCommentDTO);
+
+      expect(spy).toBeCalledTimes(1);
+    })
+  });
+
+  describe('Remove a Comment from the database', () => {
+    it('should call CommentsService.remove() only once', async () => {
+      const spy = jest.spyOn(commentsService, 'remove').mockImplementation(async () => undefined);
+
+      await commentsController.remove(1);
 
       expect(spy).toBeCalledTimes(1);
     })
