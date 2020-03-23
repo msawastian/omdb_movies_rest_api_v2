@@ -1,7 +1,7 @@
 import { Entity, PrimaryColumn, Column, OneToMany } from 'typeorm';
 import { Expose, Exclude, classToPlain, plainToClass } from 'class-transformer';
-import { Comment } from './comment.entity';
 import { MovieDTO } from '~dtos/movie/movie.dto';
+import { Comment } from './comment.entity';
 
 @Entity()
 export class Movie {

@@ -1,9 +1,9 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from "typeorm";
 import { Expose, Exclude, classToPlain, plainToClass } from "class-transformer";
+import { Min, Max } from "class-validator";
 import { Movie } from "./movie.entity";
 import { CommentDTO } from "~dtos/comment/comment.dto";
 import { SaveCommentDTO } from "~dtos/comment/save_comment.dto";
-import { Min, Max } from "class-validator";
 
 @Entity()
 export class Comment {
