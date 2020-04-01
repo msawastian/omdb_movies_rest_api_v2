@@ -1,3 +1,3 @@
 export interface IConfig {
-    [key: string]: string;
+  [key: string]: string;
 }

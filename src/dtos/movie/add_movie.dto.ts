@@ -1,13 +1,12 @@
-import { ValidateIf, IsNotEmpty, IsString } from "class-validator";
+import { ValidateIf, IsNotEmpty, IsString } from 'class-validator';
 
 export class AddMovieDTO {
-
-  @ValidateIf(o => o.title === undefined)
+  @ValidateIf((o) => o.title === undefined)
   @IsNotEmpty()
   @IsString()
   imdbID?: string;
 
-  @ValidateIf(o => o.imdbID === undefined)
+  @ValidateIf((o) => o.imdbID === undefined)
   @IsNotEmpty()
   @IsString()
   title?: string;

@@ -1,18 +1,30 @@
-import { Controller, Get, Post, UsePipes, ValidationPipe, Body, Delete, Param, HttpCode, HttpStatus, UseGuards } from "@nestjs/common";
-import { CommentsService } from "./comments.service";
-import { CommentDTO } from "~dtos/comment/comment.dto";
-import { SaveCommentDTO } from "~dtos/comment/save_comment.dto";
-import { JwtAuthGuard } from "~auth/guards/jwt-auth.guard";
+import {
+  Controller,
+  Get,
+  Post,
+  UsePipes,
+  ValidationPipe,
+  Body,
+  Delete,
+  Param,
+  HttpCode,
+  HttpStatus,
+  UseGuards,
+} from '@nestjs/common';
+import { CommentsService } from './comments.service';
+import { CommentDTO } from '~dtos/comment/comment.dto';
+import { SaveCommentDTO } from '~dtos/comment/save_comment.dto';
+import { JwtAuthGuard } from '~auth/guards/jwt-auth.guard';
 
 @Controller('comments')
 export class CommentsController {
-  constructor(private readonly commentsService: CommentsService) { }
+  constructor(private readonly commentsService: CommentsService) {}
 
   @UseGuards(JwtAuthGuard)
   @Get()
   async fetchAll(): Promise<CommentDTO[]> {
     const comments = await this.commentsService.fetchAll();
-    return Promise.all(comments.map(comment => comment.serialize()));
+    return Promise.all(comments.map((comment) => comment.serialize()));
   }
 
   @UseGuards(JwtAuthGuard)
