@@ -20,6 +20,11 @@
     "test:e2e": "jest --config ./test/jest-e2e.json",
     "docker": "docker-compose --file docker-compose.yaml up"
   },
+  "husky": {
+    "hooks": {
+      "pre-commit": "precise-commits"
+    }
+  },
   "dependencies": {
     "@nestjs/common": "^6.11.11",
     "@nestjs/core": "^6.11.11",
@@ -55,8 +60,10 @@
     "@types/passport-local": "^1.0.33",
     "@types/supertest": "^2.0.8",
     "cross-env": "^7.0.0",
+    "husky": "^4.2.3",
     "jest": "^24.9.0",
-    "prettier": "^1.18.2",
+    "precise-commits": "^1.0.2",
+    "prettier": "^1.19.1",
     "supertest": "^4.0.2",
     "ts-jest": "^24.1.0",
     "ts-loader": "^6.1.1",
