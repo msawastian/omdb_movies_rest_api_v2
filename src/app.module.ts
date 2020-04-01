@@ -19,31 +19,40 @@ import { User } from '~entities/user.entity';
   imports: [
     TypeOrmModule.forRoot({
       type: 'mysql',
-      host: process.env.OMDB_MOVIE_API_DB_SERVICE_HOST ? process.env.OMDB_MOVIE_API_DB_SERVICE_HOST : 'movies-db-api',
-      port: process.env.OMDB_MOVIE_API_DB_SERVICE_PORT ? parseInt(process.env.OMDB_MOVIE_API_DB_SERVICE_PORT, 10) : 3306,
+      host: process.env.OMDB_MOVIE_API_DB_SERVICE_HOST
+        ? process.env.OMDB_MOVIE_API_DB_SERVICE_HOST
+        : 'movies-db-api',
+      port: process.env.OMDB_MOVIE_API_DB_SERVICE_PORT
+        ? parseInt(process.env.OMDB_MOVIE_API_DB_SERVICE_PORT, 10)
+        : 3306,
       username: 'user',
       password: 'password',
       database: 'omdb-movie-api-dev',
       extra: {
-        charset: 'utf8mb4_unicode_ci'
+        charset: 'utf8mb4_unicode_ci',
       },
       synchronize: true,
-      entities: [Movie, Comment, User]
+      entities: [Movie, Comment, User],
     }),
     ConfigModule,
     OmdbClientModule,
     MoviesModule,
     CommentsModule,
     AuthModule,
-    UsersModule],
-  controllers: [MoviesController, CommentsController, AuthController, UsersController]
+    UsersModule,
+  ],
+  controllers: [
+    MoviesController,
+    CommentsController,
+    AuthController,
+    UsersController,
+  ],
 })
 export class AppModule {
   configure(consumer: MiddlewareConsumer) {
-    consumer
-      .apply(RateLimiterMiddleware)
-      .forRoutes({
-        path: '*', method: RequestMethod.ALL
-      });
+    consumer.apply(RateLimiterMiddleware).forRoutes({
+      path: '*',
+      method: RequestMethod.ALL,
+    });
   }
 }

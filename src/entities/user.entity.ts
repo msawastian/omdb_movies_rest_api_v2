@@ -1,7 +1,13 @@
-import { Entity, PrimaryGeneratedColumn, Column, BeforeInsert, Unique } from "typeorm";
-import { Expose, Exclude, plainToClass } from "class-transformer";
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  BeforeInsert,
+  Unique,
+} from 'typeorm';
+import { Expose, Exclude, plainToClass } from 'class-transformer';
 import { hash } from 'bcrypt';
-import { AddUserDTO } from "~dtos/user/add_user.dto";
+import { AddUserDTO } from '~dtos/user/add_user.dto';
 
 @Entity()
 export class User {

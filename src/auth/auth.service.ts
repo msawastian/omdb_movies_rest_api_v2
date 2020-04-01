@@ -5,13 +5,12 @@ import { UsersService } from '~users/users.service';
 import { AddUserDTO } from '~dtos/user/add_user.dto';
 import { UserDTO } from '~dtos/user/user.dto';
 
-
 @Injectable()
 export class AuthService {
   constructor(
     private userService: UsersService,
     private jwtService: JwtService
-  ) { }
+  ) {}
 
   async validateUser(username: string, password: string): Promise<any> {
     const user = await this.userService.findOne(username);
@@ -32,7 +31,7 @@ export class AuthService {
   async login(user: any) {
     const payload = { username: user.username, sub: user.id };
     return {
-      access_token: this.jwtService.sign(payload)
-    }
+      access_token: this.jwtService.sign(payload),
+    };
   }
 }
