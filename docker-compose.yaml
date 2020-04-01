@@ -3,10 +3,13 @@ version: '3.7'
 services:
   omdb-movie-api:
     image: msawastian/omdb_movies_rest_api_v2:1.0.1
+    # build: .
     environment:
       - PORT=5000
     ports: 
-      - "5000:5000" 
+      - 5000:5000
+      # - 9229:9229 
+    # command: npm run start:debug
   omdb-movie-api-db:
     image: mysql:5.7
     container_name: "movies-db-api"
@@ -18,10 +21,10 @@ services:
       MYSQL_ROOT_PASSWORD: 'rootpassword'
     ports:
       - '3306:3306'
-    
     expose:
       - '3306'
     volumes: 
       - mysql-db:/var/lib/mysql
+    command: ['mysqld', '--character-set-server=utf8mb4', '--collation-server=utf8mb4_unicode_ci']
 volumes: 
     mysql-db:
