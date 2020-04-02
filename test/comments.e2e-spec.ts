@@ -6,6 +6,7 @@ import { HttpStatus, INestApplication } from '@nestjs/common';
 import { Comment } from '~entities/comment.entity';
 import { CommentsService } from '~comments/comments.service';
 import { CommentsController } from '~comments/comments.controller';
+import { JwtAuthGuard } from '~auth/guards/jwt-auth.guard';
 
 describe('Movies Controller E2E Tests', () => {
   let app: INestApplication;
@@ -30,11 +31,16 @@ describe('Movies Controller E2E Tests', () => {
           useValue: {},
         },
         CommentsService,
+        JwtAuthGuard,
+
+
       ],
       controllers: [CommentsController],
     })
       .overrideProvider(CommentsService)
       .useValue(commentsService)
+      .overrideGuard(JwtAuthGuard)
+      .useValue({ canActivate: () => true  })
       .compile();
 
     app = module.createNestApplication();

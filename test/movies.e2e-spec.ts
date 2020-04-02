@@ -6,6 +6,7 @@ import { MoviesService } from '~movies/movies.service';
 import { OmdbClientService } from '~omdb/client/omdb_client.service';
 import { MoviesController } from '~movies/movies.controller';
 import { HttpStatus, INestApplication } from '@nestjs/common';
+import { JwtAuthGuard } from '~auth/guards/jwt-auth.guard';
 
 describe('Movies Controller E2E Tests', () => {
   let app: INestApplication;
@@ -32,6 +33,7 @@ describe('Movies Controller E2E Tests', () => {
         },
         MoviesService,
         OmdbClientService,
+        JwtAuthGuard
       ],
       controllers: [MoviesController],
     })
@@ -39,6 +41,8 @@ describe('Movies Controller E2E Tests', () => {
       .useValue(moviesService)
       .overrideProvider(OmdbClientService)
       .useValue(omdbClientService)
+      .overrideGuard(JwtAuthGuard)
+      .useValue({ canActivate: () => true})
       .compile();
 
     app = module.createNestApplication();
