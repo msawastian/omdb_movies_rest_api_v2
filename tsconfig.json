@@ -18,7 +18,9 @@
       "~error/*": ["error/*"],
       "~middleware/*": ["middleware/*"],
       "~movies/*": ["movies/*"],
-      "~omdb/*": ["omdb/*"]
+      "~omdb/*": ["omdb/*"],
+      "~auth/*": ["auth/*"],
+      "~users/*": ["users/*"],
     },
     "incremental": true
   },

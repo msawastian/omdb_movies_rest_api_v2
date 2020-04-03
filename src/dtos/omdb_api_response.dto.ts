@@ -1,9 +1,7 @@
 import { Expose, Exclude } from 'class-transformer';
 import { IsDefined, IsEmpty, IsString } from 'class-validator';
 
-
 export class OmdbApiResponseDTO {
-
   @IsDefined()
   @IsString()
   @Expose()
@@ -108,7 +106,7 @@ export class OmdbApiResponseDTO {
   @IsString()
   @Expose()
   BoxOffice: string;
-  
+
   @IsDefined()
   @IsString()
   @Expose()

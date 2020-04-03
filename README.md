@@ -97,6 +97,6 @@ Request body is validated as follows:
  - `text` must be a string that's not empty with no more than 256 characters of length,
  - `rating` must be a number between 1 and 10.
 
- ## Live version
+### DELETE '/comments/:id'
 
- Live version of the app is available at [my K8S cluster](http://35.228.200.103:5000/).
+Deletes a comment with given ID from the database.

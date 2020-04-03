@@ -15,13 +15,12 @@ import { Movie } from '~entities/movie.entity';
     HttpModule.registerAsync({
       imports: [ConfigModule],
       useFactory: async (configService: ConfigService) => ({
-        baseURL: configService.getConfig('OMDB_API_URL')
+        baseURL: configService.getConfig('OMDB_API_URL'),
       }),
-      inject: [ConfigService]
+      inject: [ConfigService],
     }),
   ],
   providers: [OmdbClientService],
   exports: [OmdbClientService],
-
 })
-export class OmdbClientModule { }
+export class OmdbClientModule {}

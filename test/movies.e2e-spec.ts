@@ -1,11 +1,12 @@
-import { Test } from "@nestjs/testing";
-import { getRepositoryToken } from "@nestjs/typeorm";
+import { Test } from '@nestjs/testing';
+import { getRepositoryToken } from '@nestjs/typeorm';
 import request from 'supertest';
-import { Movie } from "~entities/movie.entity";
-import { MoviesService } from "~movies/movies.service";
-import { OmdbClientService } from "~omdb/client/omdb_client.service";
-import { MoviesController } from "~movies/movies.controller";
-import { HttpStatus, INestApplication } from "@nestjs/common";
+import { Movie } from '~entities/movie.entity';
+import { MoviesService } from '~movies/movies.service';
+import { OmdbClientService } from '~omdb/client/omdb_client.service';
+import { MoviesController } from '~movies/movies.controller';
+import { HttpStatus, INestApplication } from '@nestjs/common';
+import { JwtAuthGuard } from '~auth/guards/jwt-auth.guard';
 
 describe('Movies Controller E2E Tests', () => {
   let app: INestApplication;
@@ -13,39 +14,40 @@ describe('Movies Controller E2E Tests', () => {
   let omdbClientService;
 
   const createMockMoviesService = () => ({
-    fetchAll: jest.fn()
-  })
+    fetchAll: jest.fn(),
+  });
 
   const createMockOmdbClientService = () => ({
-    addMovieToDB: jest.fn()
-  })
+    addMovieToDB: jest.fn(),
+  });
 
   beforeEach(async () => {
     moviesService = createMockMoviesService();
     omdbClientService = createMockOmdbClientService();
 
-    const module = await Test.createTestingModule(
-      {
-        providers: [
-          {
-            provide: getRepositoryToken(Movie),
-            useValue: {}
-          },
-          MoviesService,
-          OmdbClientService
-        ],
-        controllers: [MoviesController]
-      }
-    )
+    const module = await Test.createTestingModule({
+      providers: [
+        {
+          provide: getRepositoryToken(Movie),
+          useValue: {},
+        },
+        MoviesService,
+        OmdbClientService,
+        JwtAuthGuard
+      ],
+      controllers: [MoviesController],
+    })
       .overrideProvider(MoviesService)
       .useValue(moviesService)
       .overrideProvider(OmdbClientService)
       .useValue(omdbClientService)
+      .overrideGuard(JwtAuthGuard)
+      .useValue({ canActivate: () => true})
       .compile();
 
     app = module.createNestApplication();
     await app.init();
-  })
+  });
 
   describe('GET /movies', () => {
     it('should return an empty array', async () => {
@@ -57,12 +59,16 @@ describe('Movies Controller E2E Tests', () => {
     });
 
     it('should return a MovieDTO', async () => {
-      const movies = [new Movie({
-        imdbID: 'id',
-        title: 'title'
-      })];
+      const movies = [
+        new Movie({
+          imdbID: 'id',
+          title: 'title',
+        }),
+      ];
 
-      jest.spyOn(moviesService, 'fetchAll').mockImplementation(async () => movies);
+      jest
+        .spyOn(moviesService, 'fetchAll')
+        .mockImplementation(async () => movies);
       return request(app.getHttpServer())
         .get('/movies')
         .expect(HttpStatus.OK)
@@ -77,7 +83,9 @@ describe('Movies Controller E2E Tests', () => {
   describe('POST /movies', () => {
     it('should accept request (title)', async () => {
       const body = { title: 'Test movie' };
-      jest.spyOn(omdbClientService, 'addMovieToDB').mockImplementation(async () => null);
+      jest
+        .spyOn(omdbClientService, 'addMovieToDB')
+        .mockImplementation(async () => null);
 
       return request(app.getHttpServer())
         .post('/movies')
@@ -87,7 +95,9 @@ describe('Movies Controller E2E Tests', () => {
 
     it('should accept request (imdbID)', async () => {
       const body = { imdbID: 'ID' };
-      jest.spyOn(omdbClientService, 'addMovieToDB').mockImplementation(async () => undefined);
+      jest
+        .spyOn(omdbClientService, 'addMovieToDB')
+        .mockImplementation(async () => undefined);
 
       return request(app.getHttpServer())
         .post('/movies')
@@ -97,7 +107,9 @@ describe('Movies Controller E2E Tests', () => {
 
     it('should return an error when body is missing both required properties', async () => {
       const body = {};
-      jest.spyOn(omdbClientService, 'addMovieToDB').mockImplementation(async () => undefined);
+      jest
+        .spyOn(omdbClientService, 'addMovieToDB')
+        .mockImplementation(async () => undefined);
 
       return request(app.getHttpServer())
         .post('/movies')
@@ -107,7 +119,9 @@ describe('Movies Controller E2E Tests', () => {
 
     it('should return an error when required property data type is invalid', async () => {
       const body = { imdbID: 1 };
-      jest.spyOn(omdbClientService, 'addMovieToDB').mockImplementation(async () => undefined);
+      jest
+        .spyOn(omdbClientService, 'addMovieToDB')
+        .mockImplementation(async () => undefined);
 
       return request(app.getHttpServer())
         .post('/movies')
@@ -119,4 +133,4 @@ describe('Movies Controller E2E Tests', () => {
   afterAll(async () => {
     await app.close();
   });
-})
+});
