@@ -32,8 +32,6 @@ describe('Movies Controller E2E Tests', () => {
         },
         CommentsService,
         JwtAuthGuard,
-
-
       ],
       controllers: [CommentsController],
     })
