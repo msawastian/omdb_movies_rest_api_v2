@@ -2,7 +2,7 @@ version: '3.7'
 
 services:
   omdb-movie-api:
-    image: msawastian/omdb_movies_rest_api_v2:1.0.1
+    image: msawastian/omdb_movies_rest_api_v2:2.0.1
     # build: .
     environment:
       - PORT=5000

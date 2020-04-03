@@ -13,5 +13,6 @@ ENV PORT=5000
 COPY . .
 
 RUN npm install --silent
+RUN npm install --global --silent @nestjs/cli@6.14
 
 CMD ["npm", "start"]
