@@ -24,7 +24,7 @@ spec:
       - env:
         - name: PORT
           value: "5000"
-        image: msawastian/omdb_movies_rest_api_v2:1.0.1
+        image: msawastian/omdb_movies_rest_api_v2:1.0.2
         name: omdb-movie-api
         ports:
         - containerPort: 5000
