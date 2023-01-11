@@ -35,7 +35,7 @@
     "axios": "^0.18.1",
     "bcrypt": "^4.0.1",
     "class-transformer": "^0.2.3",
-    "class-validator": "^0.11.0",
+    "class-validator": "^0.14.0",
     "dotenv": "^8.2.0",
     "http-status-codes": "^1.4.0",
     "mysql": "^2.18.1",
